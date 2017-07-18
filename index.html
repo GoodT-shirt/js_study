@@ -9,19 +9,24 @@
 <body>
     <script type="text/javascript">
         debugger;
-        window.color = "red";
-        var o = { color: "blue"};
-        function sayColor(){
-        	alert(this.color);			//this会在调用apply时被会传入的具体对象替换
+       var handler = {
+	       	message: "Event handled",
+	       	handleClick: function(event){
+	       		alert(this.message);
+	       	}
+       }
+        function bind(fn, context, args1){	//#1
+        	console.log(arguments[0]);
+        	return function(){				//#2
+        		console.log(arguments[0]);	//这个arguments是#2函数的,arguments是比较特殊的
+        		console.log(args1);			//这个args1是#1函数的
+        		return fn.apply(context, arguments);
+        	}
         }
-        sayColor.bind2 = function(o){
-        	var fn = this;				//保存对sayColor函数的引用
-        	return function(){
-        		fn.apply(o);
-        	};
-        }
-        var objectSayColor = sayColor.bind2(o);
-        objectSayColor();
+
+        var fn = bind(handler.handleClick, handler,2);
+        fn(1);
+
     </script>
 </body>
 </html>
