@@ -9,14 +9,19 @@
 <body>
     <script type="text/javascript">
         debugger;
-        var person = {
-        	name:"zeng",
-        	age:18
+        window.color = "red";
+        var o = { color: "blue"};
+        function sayColor(){
+        	alert(this.color);			//this会在调用apply时被会传入的具体对象替换
         }
-
-        console.log(person.name);
-        delete person.name;
-        console.log(person.name);	//undefined
+        sayColor.bind2 = function(o){
+        	var fn = this;				//保存对sayColor函数的引用
+        	return function(){
+        		fn.apply(o);
+        	};
+        }
+        var objectSayColor = sayColor.bind2(o);
+        objectSayColor();
     </script>
 </body>
 </html>
