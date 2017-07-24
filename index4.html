@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+      debugger;
+      function Person(){}
+      Person.prototype.dance = function(){};
+
+      function Ninja(){}
+
+      Ninja.prototype = new Person();     
+
+      //强制使constructor属性指向Ninja,对照index3.html
+      Ninja.prototype.constructor = Ninja;                
+
+      var ninja = new Ninja();
+
+      //true,始终相等
+      alert(ninja.constructor === Ninja.prototype.constructor);
+      /*
+      true,因为上面的强制操作
+      */
+      alert(ninja.constructor === Ninja);
+      //false
+      alert(ninja.constructor === Person);
+      /*
+      只有构造函数才有原型属性，实例没有原型属性，实例只有constructor属性，而且是从构造函数的原型对象上继承而来的
+      (实例其实也有原型属性，只不过在浏览器中名字不叫prototype，而叫__proto__，也指向原型对象,这个__proto__在ECMA标准中叫[[Prototype]]）
+      */
+      /*
+       new过程的步骤
+       	(1) var p={}; 							//创建一个空对象
+		(2) p.__proto__ = Person.prototype;		//__proto__是对象上的属性，prototype是构造函数的属性
+		(3) Person.call(p); 					
+		//使构造函数中的this指向新对象，并初始化这个新对象，然后返回该新对象（或说返回这个this)
+      */
+    </script>
+</body>
+</html>

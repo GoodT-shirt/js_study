@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        debugger;
+       function Person(){
+
+       }
+       Person.prototype = {
+       		name:"zxp",
+       		age:29,
+       		job:"software engineer",
+       		sayName: function(){
+       			alert(this.name);
+       		}
+       };
+       var friend = new Person();
+       //为true, 这说明实例的constructor属性是从其构造函数的原型对象上来的，它本身并没有这个属性
+       alert(friend.constructor === Person.prototype.constructor);
+       //为false, 这说明重写原型后，constructor属性己经不再指向构造函数Person,而指向构造函数Object
+       alert(friend.constructor === Person);
+       //为true
+       alert(friend.constructor === Object);
+    </script>
+</body>
+</html>
